@@ -14,13 +14,11 @@ const ProductSchema = new Schema(
       type: Number,
       required: true,
     },
-    category: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Category',
-        required: true,
-      },
-    ],
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: 'Category',
+      required: true,
+    },
   },
   {
     timestamps: true,
