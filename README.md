@@ -31,6 +31,15 @@ https://www.getpostman.com/collections/5275a4cf6ac67d3c4d22
 
 # Commands
 
+To create an admin via command line:
+```
+yarn run createAdmin --name="Name you wante to create" --email="Email you want to create" --password="Password you want to create"
+```
+Example of valid admin:
+```
+yarn run createAdmin --name="Nome do usuario" --email="xxx@gmail.com" --password="1a2b3c4D"
+```
+
 # Organization
 
 All code is written in the src folder <br>
