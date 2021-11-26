@@ -27,7 +27,7 @@ Ask another admin to get the confidential variables on .env and create it
 # Postman
 
 Link for Postman collection:
-https://www.getpostman.com/collections/5275a4cf6ac67d3c4d22
+https://www.getpostman.com/collections/8c2ad2b0656c47a0590a
 
 # Commands
 
