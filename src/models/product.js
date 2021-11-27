@@ -5,8 +5,13 @@ const ProductSchema = new Schema(
     name: {
       type: String,
       required: true,
+      unique: true
     },
-    price: {
+    cost: {
+      type: String,
+      required: true
+    },
+    priceToConsumer: {
       type: Number,
       required: true,
     },
