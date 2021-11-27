@@ -18,3 +18,12 @@ export const createCategory = async (request, response) => {
         response.status(400).send({ message: 'Failed to create category', error })
     }
 };
+
+export const getAllProductsInCategory = async (request, response) => {
+    try {
+        const categoryWithProducts = await models.Category.findById(request.params.categoryid).populate('products')
+        response.status(201).send({message: 'Products found succefully', products: categoryWithProducts.products })
+    } catch (error) {
+        response.status(400).send({ message: 'Failed to find products in category', error })
+    }
+};
