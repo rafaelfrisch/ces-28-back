@@ -2,9 +2,10 @@
 
 1. [About](#about)
 2. [Setup](#setup)
-3. [Commands](#commands)
-4. [Postman](#postman)
-5. [Organization](#organization)
+3. [Tests](#tests)
+4. [Commands](#commands)
+5. [Postman](#postman)
+6. [Organization](#organization)
 
 # About
 
@@ -24,10 +25,21 @@ Do not use ```npm install```!
 
 Ask another admin to get the confidential variables on .env and create it
 
+# Tests
+
+The tests are written using [JEST](https://jestjs.io/pt-BR/) library
+
+To run all tests
+``` 
+yarn test
+```
+
+
 # Postman
 
 Link for Postman collection:
-https://www.getpostman.com/collections/8c2ad2b0656c47a0590a
+
+[Collection](https://www.getpostman.com/collections/8c2ad2b0656c47a0590a)
 
 # Commands
 
