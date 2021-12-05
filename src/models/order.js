@@ -19,7 +19,10 @@ const OrderSchema = new Schema({
       },
     },
   ],
-  orderDate: Date
+  orderDate: {
+    type: Date,
+    required: true
+  }
 });
 
 export const Order = model('Order', OrderSchema, 'Order');

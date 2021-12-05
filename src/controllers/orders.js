@@ -1,13 +1,14 @@
 import * as models from '../models';
 
 export const createOrder = async (request, response) => {
-    const categoryId = request.params.categoryid
+    const userId = request.params.userid
+    
     try {
-        const product = new models.Product({category: categoryId, ...request.body})
-        await product.save()
-        response.status(201).send({message: 'Product created succefully', product })
+        const order = new models.Order({user: userId, ...request.body})
+        await order.save()
+        response.status(201).send({message: 'Order created succefully', order })
     } catch (error) {
         console.log(error)
-        response.status(400).send({ message: 'Failed to create product', error })
+        response.status(400).send({ message: 'Failed to create order', error })
     }
 };
