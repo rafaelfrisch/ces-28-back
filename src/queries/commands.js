@@ -29,4 +29,30 @@ yargs.command({
     }
 })
 
+yargs.command({
+    command: 'createOrders',
+    describe: 'Create multiple new orders',
+    builder: {
+        numOrders: {
+            describe: 'Number of orders to create',
+            demandOption: true,
+            type: 'int',
+        },
+        minDate: {
+            describe: 'Email of admin',
+            demandOption: true,
+            type: 'string',
+        },
+        maxDate: {
+            describe: 'Email of admin',
+            demandOption: true,
+            type: 'string',
+        },
+    },
+    handler: async (argv) => {
+        await commands.createOrders(argv.numOrders, argv.minDate, argv.maxDate)
+        mongoose.connection.close()
+    }
+})
+
 yargs.parse()
