@@ -55,4 +55,20 @@ yargs.command({
     }
 })
 
+yargs.command({
+    command: 'createProducts',
+    describe: 'Create multiple new products',
+    builder: {
+        numProducts: {
+            describe: 'Number of products to create',
+            demandOption: true,
+            type: 'int',
+        }
+    },
+    handler: async (argv) => {
+        await commands.createProducts(argv.numProducts)
+        mongoose.connection.close()
+    }
+})
+
 yargs.parse()
