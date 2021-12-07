@@ -1,4 +1,4 @@
-import * as models from '../models';
+import * as models from '../../models';
 
 const getRandomNumberOfProductsIds = async () => {
     const products = await models.Product.find()

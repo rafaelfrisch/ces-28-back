@@ -1,4 +1,5 @@
-import * as models from '../models'
+import * as models from '../../models'
+
 const getRandomUserId = require('./getRandomUser');
 const getRandomNumberOfProductsIds = require('./getRandomNumberOfProductsIds');
 const addQuantityToProducts = require('./addQuantityToProducts');

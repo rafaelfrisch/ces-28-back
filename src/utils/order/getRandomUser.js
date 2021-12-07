@@ -1,4 +1,4 @@
-import * as models from '../models';
+import * as models from '../../models';
 
 const getRandomUserId = async () => {
     const users = await models.User.find()
