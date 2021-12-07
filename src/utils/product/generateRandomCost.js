@@ -1,8 +1,8 @@
 const maxCost = 1000
 
-const createRandomCost = () => {
+const generateRandomCost = () => {
     const randomCost = (Math.random()*maxCost).toFixed(2)
     return randomCost
 }
 
-module.exports = createRandomCost
+module.exports = generateRandomCost
