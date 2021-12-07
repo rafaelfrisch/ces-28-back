@@ -39,7 +39,26 @@ export const getReportOfOrderById = async (request, response) => {
     } catch (error) {
         response.status(400).send({ message: 'User not found', error })       
     }
+}
 
+export const getReportByDay = async (request, response) => {
+    try {
+        const { dateParam } = request.query
+        const date = new Date(dateParam)
+        const year = date.getFullYear()
+        const month = date.getMonth()
+        const day = date.getDate()
+        const initialDate = new Date(year, month, day)
+        const finalDate = new Date(year, month, day+1)
+
+        const orders = await models.Order.find({ orderDate: { $gte: initialDate, $lt: finalDate } }).sort({ orderDate: 1 })
+
+        const report = await utils.getReportByDay(orders)
+        console.log(report)
+        response.status(200).send(report)
+    } catch (error) {
+        response.status(400).send({ message: 'Error when getting orders', error })
+    }
 }
 
 export const getOrderReportByDate = async (request, response) => {
@@ -69,20 +88,10 @@ export const getOrderReportByDate = async (request, response) => {
         
         const reportsByDay = arrayOfSameDateOrders.map(async(orderArrayOnDay) => {
             const date = orderArrayOnDay[0].orderDate
-
-            const reportsByEachOrder = await orderArrayOnDay.map(async (order) => {
-                const { sales, profit, revenues, mediumTicket } = await utils.getReportOfOneOrder(order)
-                return {
-                    sales,
-                    profit,
-                    revenues,
-                    mediumTicket
-                }
-            })
-            console.log(reportsByEachOrder)
+            const reportByDay = await utils.getReportByDay(orderArrayOnDay)
             return {
                 date,
-                reportsByEachOrder
+                reportByDay
             }
         })
 
