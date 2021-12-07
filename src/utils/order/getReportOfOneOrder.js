@@ -10,7 +10,6 @@ const getReportOfOneOrder = async (order) => {
         try {
             
             const product = await models.Product.findById(productOrder.product)
-            console.log(productOrder.product)
             sales += productOrder.quantity
             revenues += productOrder.quantity * product.priceToConsumer
             profit += productOrder.quantity * (product.priceToConsumer - product.cost)
