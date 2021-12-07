@@ -53,9 +53,23 @@ export const getReportByDay = async (request, response) => {
 
         const orders = await models.Order.find({ orderDate: { $gte: initialDate, $lt: finalDate } }).sort({ orderDate: 1 })
 
-        const report = await utils.getReportByDay(orders)
-        console.log(report)
-        response.status(200).send(report)
+        const reportPerOrder = await utils.getReportByDay(orders)
+
+        const reportDay = {
+            sales: 0,
+            revenues: 0,
+            profit: 0,
+            mediumticket: 0,
+        }
+
+        reportPerOrder.forEach((report) => {
+            reportDay.sales += report.sales
+            reportDay.revenues += report.revenues
+            reportDay.profit += report.profit
+        })
+        reportDay.mediumticket = reportDay.revenues/reportDay.sales
+
+        response.status(200).send(reportDay)
     } catch (error) {
         response.status(400).send({ message: 'Error when getting orders', error })
     }
