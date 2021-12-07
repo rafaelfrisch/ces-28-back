@@ -1,6 +1,6 @@
 const maxNumberOfSalesOfProduct = 5
 
-const addQuantityToProducts = async (productsIdsArray) => {
+const addQuantityToProducts = (productsIdsArray) => {
     const newProductsArray = productsIdsArray.map((product) => 
     {   
         const numberOfSalesOfProduct = Math.ceil(Math.random()*maxNumberOfSalesOfProduct)
