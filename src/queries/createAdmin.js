@@ -17,7 +17,7 @@ export const createAdmin = async (name, email, password) => {
         return console.log(chalk.red("Email not valid"))
 
     try {
-        const admin = new models.Users({ name, email, password, admin: true })
+        const admin = new models.User({ name, email, password, admin: true })
         await admin.save()
 
         console.log(chalk.green('Admin created succefully', admin))
