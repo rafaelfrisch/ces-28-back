@@ -43,13 +43,28 @@ Link for Postman collection:
 
 # Commands
 
-To create an admin via command line:
+## To create an admin via command line:
+
 ```
 yarn run createAdmin --name="Name you wante to create" --email="Email you want to create" --password="Password you want to create"
 ```
+
 Example of valid admin:
+
 ```
 yarn run createAdmin --name="Nome do usuario" --email="xxx@gmail.com" --password="1a2b3c4D"
+```
+
+## To create a random number of orders:
+
+```
+yarn run createOrders --numOrders=number_of_orders --minDate="year/month/day" --maxDate="year/month/day"
+```
+
+Example of valid command:
+
+```
+yarn run createOrders --numOrders=10 --minDate="2019/08/20" --maxDate="2021/08/20"
 ```
 
 # Organization
