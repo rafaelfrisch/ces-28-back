@@ -4,7 +4,7 @@ import chalk from 'chalk'
 export const createProducts = async (numProducts) => {
     try {
 
-        for(let i=0 ; i < 1; i++)
+        for(let i=0 ; i < numProducts; i++)
             await utils.createRandomProduct()
 
     } catch (error) {
