@@ -40,6 +40,15 @@ export const getUser = async (request, response) => {
     }
 };
 
+export const getUserByToken = async (request, response) => {
+    try {
+        const user = request.loggedUser
+        response.status(200).send(user)
+    } catch (error) {
+        response.status(400).send({ message: 'User not found', error })       
+    }
+};
+
 export const getAllUsers = async (request, response) => {
     try {
         const users = await models.User.find()

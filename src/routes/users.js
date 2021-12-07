@@ -5,6 +5,7 @@ import * as middlewares from '../middlewares';
 const router = new express.Router()
 
 router.get('/getuser/:userid', middlewares.authMiddleware, controllers.getUser);
+router.get('/getuserbytoken', middlewares.authMiddleware, controllers.getUserByToken);
 router.get('/getallusers', middlewares.authMiddleware, middlewares.adminAuthMiddleware, controllers.getAllUsers);
 router.post('/createuser', controllers.createUser);
 router.put('/users/:userid', middlewares.authMiddleware, controllers.updateUser);
