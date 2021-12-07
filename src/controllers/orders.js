@@ -86,78 +86,19 @@ export const getOrderReportByDate = async (request, response) => {
                 arrayOfSameDateOrders[arrayOfSameDateOrders.length-1].push(order)
         })
         
-        const reportsByDay = arrayOfSameDateOrders.map(async(orderArrayOnDay) => {
+        const dayReportsArray = []
+
+        for (const orderArrayOnDay of arrayOfSameDateOrders){
             const date = orderArrayOnDay[0].orderDate
-            const reportByDay = await utils.getReportByDay(orderArrayOnDay)
-            return {
-                date,
-                reportByDay
-            }
-        })
+            const dateString = date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate()
+            const dayReport = await utils.getReportByDay(orderArrayOnDay)
+            dayReportsArray.push({
+                date: dateString,
+                dayReport
+            })
+        }
 
-        
-        // const reportsByDay = arrayOfSameDateOrders.map(async(orderArrayOnDay) => {
-        //     const date = orderArrayOnDay[0].orderDate
-        //     const reportsByEachOrder = await orderArrayOnDay.map(async (order) => {
-        //         let sales = 0
-        //         let profit = 0
-        //         let revenues = 0
-        //         let mediumTicket = 0
-        //         for (const productOrder of order.products){
-        //             try {
-        //                 const product = await models.Product.findById(productOrder.product)
-        //                 sales += productOrder.quantity
-        //                 revenues += productOrder.quantity * product.priceToConsumer
-        //                 profit += productOrder.quantity * (product.priceToConsumer - product.cost)
-        //             } catch (error) {
-        //                 console.log(error)
-        //             }
-        //         }
-        //         mediumTicket = revenues/sales
-                
-        //         return {
-        //             sales,
-        //             profit,
-        //             revenues,
-        //             mediumTicket
-        //         }
-        //     })
-        //     console.log(reportsByEachOrder)
-        //     return {
-        //         date,
-        //         reportsByEachOrder
-        //     }
-        // })
-
-        // const reportsByDay = arrayOfSameDateOrders.map((orderArrayOnDay) => {
-        //     const date = orderArrayOnDay[0].orderDate
-        //     const reportsByEachOrder = orderArrayOnDay.map((order) => {
-        //         let sales = 0
-        //         let profit = 0
-        //         let revenues = 0
-        //         let mediumTicket = 0
-        //         order.products.forEach(async (productOrder) => {
-        //             const product = await models.Product.findById(productOrder.product)
-        //             console.log(product.name)
-        //             sales += productOrder.quantity
-        //             revenues += productOrder.quantity * product.priceToConsumer
-        //             profit += productOrder.quantity * (product.priceToConsumer - product.cost)
-        //         })
-        //         mediumTicket = revenues/sales
-        //         return {
-        //             sales,
-        //             profit,
-        //             revenues,
-        //             mediumTicket
-        //         }
-        //     })
-        //     return {
-        //         date,
-        //         reportsByEachOrder
-        //     }
-        // })
-
-        response.status(200).send(reportsByDay)
+        response.status(200).send(dayReportsArray)
     } catch (error) {
         response.status(400).send({ message: 'Error when getting orders', error })
     }
