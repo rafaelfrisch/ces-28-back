@@ -30,6 +30,18 @@ export const filterOrdersByDate = async (request, response) => {
     }
 }
 
+export const getReportOfOrderById = async (request, response) => {
+    
+    try {
+        const order = await models.Order.findById(request.params.orderid)
+        const report = await utils.getReportOfOneOrder(order)
+        response.status(200).send(report)
+    } catch (error) {
+        response.status(400).send({ message: 'User not found', error })       
+    }
+
+}
+
 export const getOrderReportByDate = async (request, response) => {
 
     try {
@@ -54,9 +66,89 @@ export const getOrderReportByDate = async (request, response) => {
             else
                 arrayOfSameDateOrders[arrayOfSameDateOrders.length-1].push(order)
         })
+        
+        const reportsByDay = arrayOfSameDateOrders.map(async(orderArrayOnDay) => {
+            const date = orderArrayOnDay[0].orderDate
 
+            const reportsByEachOrder = await orderArrayOnDay.map(async (order) => {
+                const { sales, profit, revenues, mediumTicket } = await utils.getReportOfOneOrder(order)
+                return {
+                    sales,
+                    profit,
+                    revenues,
+                    mediumTicket
+                }
+            })
+            console.log(reportsByEachOrder)
+            return {
+                date,
+                reportsByEachOrder
+            }
+        })
 
-        response.status(200).send(arrayOfSameDateOrders)
+        
+        // const reportsByDay = arrayOfSameDateOrders.map(async(orderArrayOnDay) => {
+        //     const date = orderArrayOnDay[0].orderDate
+        //     const reportsByEachOrder = await orderArrayOnDay.map(async (order) => {
+        //         let sales = 0
+        //         let profit = 0
+        //         let revenues = 0
+        //         let mediumTicket = 0
+        //         for (const productOrder of order.products){
+        //             try {
+        //                 const product = await models.Product.findById(productOrder.product)
+        //                 sales += productOrder.quantity
+        //                 revenues += productOrder.quantity * product.priceToConsumer
+        //                 profit += productOrder.quantity * (product.priceToConsumer - product.cost)
+        //             } catch (error) {
+        //                 console.log(error)
+        //             }
+        //         }
+        //         mediumTicket = revenues/sales
+                
+        //         return {
+        //             sales,
+        //             profit,
+        //             revenues,
+        //             mediumTicket
+        //         }
+        //     })
+        //     console.log(reportsByEachOrder)
+        //     return {
+        //         date,
+        //         reportsByEachOrder
+        //     }
+        // })
+
+        // const reportsByDay = arrayOfSameDateOrders.map((orderArrayOnDay) => {
+        //     const date = orderArrayOnDay[0].orderDate
+        //     const reportsByEachOrder = orderArrayOnDay.map((order) => {
+        //         let sales = 0
+        //         let profit = 0
+        //         let revenues = 0
+        //         let mediumTicket = 0
+        //         order.products.forEach(async (productOrder) => {
+        //             const product = await models.Product.findById(productOrder.product)
+        //             console.log(product.name)
+        //             sales += productOrder.quantity
+        //             revenues += productOrder.quantity * product.priceToConsumer
+        //             profit += productOrder.quantity * (product.priceToConsumer - product.cost)
+        //         })
+        //         mediumTicket = revenues/sales
+        //         return {
+        //             sales,
+        //             profit,
+        //             revenues,
+        //             mediumTicket
+        //         }
+        //     })
+        //     return {
+        //         date,
+        //         reportsByEachOrder
+        //     }
+        // })
+
+        response.status(200).send(reportsByDay)
     } catch (error) {
         response.status(400).send({ message: 'Error when getting orders', error })
     }
