@@ -8,7 +8,7 @@ export const createProducts = async (numProducts) => {
             await utils.createRandomProduct()
 
     } catch (error) {
-        console.log(chalk.red('Error when creating orders'))
+        console.log(chalk.red('Error when creating Products'))
         console.log(chalk.red('Error: ', error))
     }
 };

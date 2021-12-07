@@ -1,7 +1,9 @@
 import * as models from '../../models'
+const getRandomProductName = require('./getRandomProductName')
 
 const createRandomProduct = async () => {
-    console.log('entrou')
+    const randomName = getRandomProductName()
+    console.log(randomName)
 }
 
 module.exports = createRandomProduct
