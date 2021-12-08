@@ -110,8 +110,30 @@ export const getOrderReportByDate = async (request, response) => {
                 categoryReport: buildCategoryReport
             })
         }
+        const categoriesNameObject = {}
+        for(const categorieIdObject in categoriesIdObject){
+            const categorieName = categoriesIdObject[categorieIdObject]
+            categoriesNameObject[categorieName] = {
+                sales: 0,
+                revenues: 0,
+                profit: 0,
+            }
+        }
 
-        response.status(200).send(dayReportsArray)
+        dayReportsArray.forEach((dayReport) => {
+            try {
+                const categoryReport = dayReport.categoryReport
+                for(const categoryName in categoryReport){
+                    categoriesNameObject[categoryName].sales += categoryReport[categoryName].sales
+                    categoriesNameObject[categoryName].revenues += categoryReport[categoryName].revenues
+                    categoriesNameObject[categoryName].profit += categoryReport[categoryName].profit
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        })
+       
+        response.status(200).send({dayReportsArray, categoryReport: categoriesNameObject})
     } catch (error) {
         response.status(400).send({ message: 'Error when getting orders', error })
     }
