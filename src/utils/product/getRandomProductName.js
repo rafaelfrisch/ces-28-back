@@ -1,9 +1,8 @@
-import * as products from './products.json'
+import { products } from './products.js'
 
 const getRandomProductName = () => {
-    const productsData = products.default
-    const randomIndex = Math.floor(Math.random()*productsData.length)
-    return productsData[randomIndex].name
+    const randomIndex = Math.floor(Math.random()*products.length)
+    return products[randomIndex].name
 }
 
 module.exports = getRandomProductName
