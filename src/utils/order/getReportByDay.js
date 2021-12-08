@@ -19,8 +19,10 @@ const getReportByDay = async (orderArray) => {
         categoryReport = mergeCategory(categoryReport, report.reportByCategory)
     }
     dayReport.mediumticket = dayReport.revenues/dayReport.numOrders
-    console.log(categoryReport)
-    return dayReport
+    return { 
+        dayReport,
+        categoryReport 
+    }
 }
 
 module.exports = getReportByDay

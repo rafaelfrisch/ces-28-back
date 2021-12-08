@@ -97,10 +97,17 @@ export const getOrderReportByDate = async (request, response) => {
         for (const orderArrayOnDay of arrayOfSameDateOrders){
             const date = orderArrayOnDay[0].orderDate
             const dateString = date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate()
-            const dayReport = await utils.getReportByDay(orderArrayOnDay)
+            const { dayReport, categoryReport } = await utils.getReportByDay(orderArrayOnDay)
+            const buildCategoryReport = {}
+            for(const categoryId in categoryReport){
+                const categoryName = categoriesIdObject[categoryId]
+                buildCategoryReport[categoryName] = categoryReport[categoryId]
+            }
+ 
             dayReportsArray.push({
                 date: dateString,
-                dayReport
+                dayReport,
+                categoryReport: buildCategoryReport
             })
         }
 
