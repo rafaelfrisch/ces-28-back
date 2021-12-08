@@ -9,11 +9,14 @@ const getReportByDay = async (orderArray) => {
         profit: 0,
         mediumticket: 0,
     }
+    const categoryReport = {}
+
     for (const order of orderArray){
         const report = await getReportOfOneOrder(order)
         dayReport.sales += report.sales
         dayReport.revenues += report.revenues
         dayReport.profit += report.profit
+        console.log(report.reportByCategory)
     }
     dayReport.mediumticket = dayReport.revenues/dayReport.numOrders
     
