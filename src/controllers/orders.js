@@ -88,6 +88,12 @@ export const getOrderReportByDate = async (request, response) => {
         
         const dayReportsArray = []
 
+        const categories = await models.Category.find()
+        const categoriesIdObject = {}
+        categories.forEach((categorie) => {
+            categoriesIdObject[categorie._id] = categorie.name
+        })
+
         for (const orderArrayOnDay of arrayOfSameDateOrders){
             const date = orderArrayOnDay[0].orderDate
             const dateString = date.getFullYear() + '/' + date.getMonth() + '/' + date.getDate()
