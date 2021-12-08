@@ -1,5 +1,6 @@
 import * as models from '../../models'
 const getReportOfOneOrder = require('./getReportOfOneOrder')
+const mergeCategory = require('./mergeCategory')
 
 const getReportByDay = async (orderArray) => {
     const dayReport = {
@@ -9,17 +10,16 @@ const getReportByDay = async (orderArray) => {
         profit: 0,
         mediumticket: 0,
     }
-    const categoryReport = {}
-
+    let categoryReport = {}
     for (const order of orderArray){
         const report = await getReportOfOneOrder(order)
         dayReport.sales += report.sales
         dayReport.revenues += report.revenues
         dayReport.profit += report.profit
-        console.log(report.reportByCategory)
+        categoryReport = mergeCategory(categoryReport, report.reportByCategory)
     }
     dayReport.mediumticket = dayReport.revenues/dayReport.numOrders
-    
+    console.log(categoryReport)
     return dayReport
 }
 
